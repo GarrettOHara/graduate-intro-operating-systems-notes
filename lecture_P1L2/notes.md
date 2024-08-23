@@ -84,7 +84,141 @@ All of these hardware components are used by applications. Multiple applications
   - *Manages hardware on behalf of one or more application according to some predefined policies*
   - *Ensures that applications are isolated and protected from one another (reading data when not permitted, overwriting memory addresses/data)*
 
+# Quiz 1
+
+Which of the following are likely components of an operating system? Check all that apply
+- file editor
+- file system
+- device driver
+- cache memory
+- web browser
+- scheduler
+
+---
+
+### Answer
 
 
+- file system
+- device driver
+- scheduler
+
+# Quiz 2
+
+For the following options, indicate if they are examples of abstractions(B) or arbitration (R)
+
+distributing memory between multiple processes ___
+
+supporting different types of speakers ___
+
+interchangeable access of hard disk or SSD ___
+
+
+### Answer
+
+- R
+- A
+- A
+
+# Operating System Examples
+
+- Mainframes / High end servers
+- Desktop
+  - Windows
+  - Unix-based
+    - Mac (Extends the Unix BDS [Berkley System Distribution of Unix])
+    - Linux
+      - Ubuntu, Arch btw, etc.
+- Embedded
+  - Smartphones / Tablets
+    - Android
+    - iOS
+    - Symbian
+
+*There are a number of unique choices between these operating systems. we will focus on Linux*
+
+# OS Elements
+
+### Abstractions
+
+- Process, thread
+- File, socket, and memory page
+  - more closely relates to the underlying hardware they represent
+
+
+### Mechanisms
+
+- Create, schedule, open, write, allocate
+
+### Policies
+
+- Least Recently Used (LRU)
+  - Typically for cache management
+- Earliest Deadline First (EDF)
+
+*Determine which process/data  to evict from memory*
+
+## OS Elements: Memory Management Example
+
+- Abstractions 
+  - Memory page
+- Mechanism
+  - Allocate, map to a process
+- Policies
+  - Least recently used LRU to determine weather the contents of a memory page is stored in memory or on disk Storage 
+  - When we change from physical memory to disk storage this is known as "Swapping"
+
+## Design Principles
+
+Separation of mechanism and policy
+- implementation flexible mechanisms to support many policies
+  - LRU, LFU, random
+
+Optimize for common cases
+  - Where will the OS be used (what type of machine/environment)?
+  - What will the end user be doing on the machine?
+  - What are the workload requirements?
+
+## Basic OS Services
+
+- scheduler 
+  - controls access to the CPU(s)
+- memory Manager
+  - controls access to memory
+  - ensure applications don't overwrite other application's memory
+- block device driver 
+  - responsible for block device like disk
+
+*higher level abstractions*
+- file system
+  - files used by almost all OSs
+
+*Operating Systems need to provide certain functionalityies for clients or application developers to be useful*
+- Process management
+- File management
+- Device management
+
+
+Operating systems makes all of these functionalities available via ***System Calls***
+
+### Windows vs Linux System Calls
+
+Very similar types of system calls but are different names API endpoints.
+
+# Quiz 3
+
+On a Linux 64 Bit Operating System which System Call is used to:
+
+- Send a signal to a process
+- set the group identity of a process
+- mount a file system
+- read/write system parameters
+
+### Answer
+
+- Kill
+- SETGID
+- MOUNT
+- SYSCTL
 
 
