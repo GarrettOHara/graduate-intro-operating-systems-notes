@@ -107,11 +107,11 @@ Which of the following are likely components of an operating system? Check all t
 
 For the following options, indicate if they are examples of abstractions(B) or arbitration (R)
 
-distributing memory between multiple processes ___
+Distributing memory between multiple processes ___
 
-supporting different types of speakers ___
+Supporting different types of speakers ___
 
-interchangeable access of hard disk or SSD ___
+Interchangeable access of hard disk or SSD ___
 
 
 ### Answer
@@ -263,20 +263,17 @@ Overall, more common today.
 
 ## Micro kernel
 
-- Only require the most basic primitives at the operating system level
-- can support some basic services to represent
-  - address space, context, and thread
+*Only require the most basic primitives at the operating system level*
 
-Typical services we usually think of as apart of the operating system like
-  - file system
-  - device drivers
-  - applications like databases
-
-All typically run outside of the operating system at User Level
-
-Requires lots of interprocess iterations
-
-Will support inter process communication as one of lots core services within the OS as well as address spaces and threads
+- Can support some basic services to represent
+  - Address space, context, and threads
+- Typical services we usually think of as apart of the operating system like
+  - File system
+  - Device drivers
+  - Applications like databases
+- All typically run outside of the operating system at User Level
+- Requires lots of interprocess iterations
+- Will support inter process communication as one of lots core services within the OS as well as address spaces and threads
 
 ***Benefits:***
 - Very small in size/footprint
@@ -292,3 +289,31 @@ Will support inter process communication as one of lots core services within the
 - Significant amount of interprocess communication that comes at a cost of user/kernel level crossing
 - Complexity of software development
   - each environment is different. hard to make software operate in all micro kernel environments.
+
+## Linux Architecture
+
+![Linux Architecture](./images/1.png)
+
+![Linux System Calls](./images/2.png)
+
+## Mac OS Architecture
+
+![Mac OS Architecture](./images/3.png)
+
+**Mac micro kernel at the core** Implements key primitives like:
+- memory management
+- thread scheduling
+- inter-process communication mechanisms (RPC)
+
+**BSD Component**
+- Unix interoperability with Unix like command line interface
+- POSIX API support 
+- Network I/O
+
+*All application environments sit above these layers.*
+
+The very bottom layers are for
+- Development of drivers
+- Kernel modules that can be dynamically loaded into the kernel when needed
+
+
