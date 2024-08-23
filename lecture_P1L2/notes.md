@@ -179,6 +179,81 @@ Optimize for common cases
   - What will the end user be doing on the machine?
   - What are the workload requirements?
 
+
+## User / Kernal Protection Boundary
+
+**Unpriviledged Mode (User  Level)**
+- Threads and applications
+
+**Privileged Mode (Kernel Level)**
+- Operating System
+
+**Context Switch**
+
+*Operating systems support **context switching** which is the process of switching a process between user and kernel level modes.*
+- The operating system keeps track of User/Kernel mode via a bit/flag stored within the CPU registers
+
+**Trap**
+
+- Attempts to perform a priviledged (kernel level) operation when in user mode creates a ***trap*** in the operating system
+  - Application will be interuppted
+  - Hardware will switch the CPU bit/flag to be in kernel mode for the operating system
+    - The operating system has a chance to check what caused the ***trap*** operation.
+    - OS can grant access or terminal the process.
+
+**System Call**
+
+Interations between the operating system and applications are performed via the ***system call*** interface.
+
+- Applications call these system calls when they want the operating system to perform a certain OS level service
+  - Open (file)
+  - Send (socket)
+  - Malloc (memory allocation)
+
+## System Call Flowchart
+
+### System Call Steps
+
+- user process is executing
+  - needs hardware access
+- user process makes a system call
+- trap mode set to `0` which switches to kernel mode
+- OS grants priviledged access
+- kernel mode executes system call
+- trap mode set to `1` which switches back to user mode
+- return from system call in user mode
+
+![System Call Flowchart](./images/0.png)
+
+### System Call Requirements
+
+*To make a system call an application must*
+- write arguments
+- save relevant data at well defined location(s)
+- make the system call
+
+***Synchronous Mode:***
+
+Wait until the system call completes. 
+
+***Asynchronous Mode:***
+
+Can execute multiple system calls asynchronously. Will be discussed later in the semester.
+
+## Crossing the User/Kernel Protection Boundary
+
+### User/Kernel Transitions
+
+Only the operatins system/kernel are allowed to perform transisitons.
+- Hardware supported
+  - Traps on illegal instructions or memory accesses require special privlidges
+- Involves a number of instructions
+  - 50-100 ns of real time required on a 2GHz CPU running Linux
+- Switch locality
+  - Affects teh hardware cache
+
+***TLDR; user/kernel transitions are not cheap***
+
 ## Basic OS Services
 
 - scheduler 
