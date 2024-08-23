@@ -191,9 +191,9 @@ Optimize for common cases
 
 *higher level abstractions*
 - file system
-  - files used by almost all OSs
+  - files used by almost all Operating Systems
 
-*Operating Systems need to provide certain functionalityies for clients or application developers to be useful*
+*Operating Systems need to provide certain functionalities for clients or application developers to be useful*
 - Process management
 - File management
 - Device management
@@ -221,4 +221,74 @@ On a Linux 64 Bit Operating System which System Call is used to:
 - MOUNT
 - SYSCTL
 
+# Operating System Approaches
 
+## Monolithic OS
+
+*Historically Monolithic OS were popular/primary OS design.*
+
+When every possible service (memory management, device drivers, file management, process / thread, scheduling) that any one of the applications may require or that any type of hardware will require/demand is already apart of the operating system.
+
+
+***Downsides:***
+  - This can potentially make the Operating System really large 
+  - A lot of overhead
+  - Customization can be lacking or hard to implement
+  - Large memory footprint
+  - Sometimes poor performance
+***Benefit:***
+  - Everything is included
+  - Inclining, compiling optimizations
+
+
+## Modular OS
+
+Has a number of basic services and APIs apart of it already. But everything that is required can be added as a module
+  - We can choose what type of module we want to customize the service for the best use case
+    - choose what file system you want, device block driver to manage drives, memory manager, scheduler, etc.
+    - Depending on the workload, we can install a module to implement the module's interface we can install a file system optimized for random access, or if there is other workloads on the computer we can do it for sequential access
+
+***Benefits:***
+- Easier to maintain and upgrade
+- Smaller code base less overheard
+- less resource needs
+  - can leave more memory for the actual application running on the instance
+  - can lead to better performance as well
+
+***Downsides:***
+- Indirection can impact performance
+- Maintenance can still be an issue because we depend on 3rd parties to maintain the modules and caon be poorly maintained or contain bugs
+
+Overall, more common today.
+
+## Micro kernel
+
+- Only require the most basic primitives at the operating system level
+- can support some basic services to represent
+  - address space, context, and thread
+
+Typical services we usually think of as apart of the operating system like
+  - file system
+  - device drivers
+  - applications like databases
+
+All typically run outside of the operating system at User Level
+
+Requires lots of interprocess iterations
+
+Will support inter process communication as one of lots core services within the OS as well as address spaces and threads
+
+***Benefits:***
+- Very small in size/footprint
+- Lower overhead and better performance
+- Verifiability
+  - Since the footprint and overhead are low, it is easier to verify that software behaves exactly as it should
+  - Great test environment for QA of software
+  - Makes micro kernels valuable for in environments where the operating system stability os very important like embedded systems
+
+***Drawbacks:***
+- Portability is questionable because each kernel is specialized for the underlying hardware it is running on
+  - hard to find common components for software
+- Significant amount of interprocess communication that comes at a cost of user/kernel level crossing
+- Complexity of software development
+  - each environment is different. hard to make software operate in all micro kernel environments.
