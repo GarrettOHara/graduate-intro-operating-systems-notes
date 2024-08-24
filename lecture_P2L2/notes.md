@@ -115,4 +115,3 @@ Do the following statements apply to processes(P), threads(T) or both(B)?
 - B
 
 
-
