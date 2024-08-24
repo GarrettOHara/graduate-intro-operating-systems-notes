@@ -124,6 +124,8 @@ on the CPU, when in reality it is scheduled, ran, stopped constantly until it is
 
 **How does the OS know what a process is doing?**
 
+*example code: https://s3.amazonaws.com/content.udacity-data.com/courses/ud923/notes/ud923-p2l1-loop-code-example.png*
+
 When a program is compiled, it gets translated to bytecode/binary (as an executable) sequence of instructions. At **ANY** time the CPU has a "PC" or Program Counter to keep track of where exactly in the instruction set the program is.
 
 The **Program Counter** is maintained on the CPU while the process is executing in a register.
@@ -246,6 +248,8 @@ Most operating systems after it has been loaded by the boot loader, it will crea
 
 ![Process structure](./images/11.png)
 
+*larger image here: https://s3.amazonaws.com/content.udacity-data.com/courses/ud923/notes/ud923-p2l1-process-tree.png*
+
 Mechanisms for process Creation
 
 - Fork
@@ -269,6 +273,7 @@ for the respective program/application to execute
 
 # Quiz 4
 On Unix based OS, which  process is regarded as "the parent of all App processes"? ___
+
 On the Android OS, which process is regarded as "the parent of all App processes"? ___
 
 ### Answer
@@ -396,3 +401,19 @@ Suppose we have P1: Web Server, and P2: Database. The OS will maintain a "Buffer
 ![Shared Memory](./images/9.png)
 
 ***It only makes sense to do shared memory based IPC if the setup cost can be amortized across a sufficiently large message set, since establishing the shared memory channel mapping is very expensive***
+
+# Quiz 6
+
+Shared memory based communication performs better than message passing communication
+
+- True
+- False
+- It depends
+
+### Answer
+
+- It depends
+
+*With shared memor based communication the data doesn't require that the data is copied in and out of the kernel, but the operation of **mapping data in between two processes is expensive**.*
+
+*Only makes sense to do shared memory based communication if the setup cost of the operation is **amortized** accross a sufficiently large number of messages*
