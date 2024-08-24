@@ -281,20 +281,22 @@ On the Android OS, which process is regarded as "the parent of all App processes
 - There are multiple processes waiting in the ready queue.
 - Which process do we choose to execute on the CPU?
 
-CPU Scheduler is an OS component that manages how the processes use the CPU resources
-    - Decides which process in the ready queue is disported to the CPU to use the resources
+*CPU Scheduler is an OS component that manages how the processes use the CPU resources*
+    - Decides which process in the ready queue is dispatched to the CPU to use the resources
     - Determines how long each process will run on the CPU
 
-**Preempt**: interrupt and save current context
+**Preempt**: interrupt and save current context (preemption)
 **Schedule**: run scheduler to choose next process
 **Dispatch**: Dispatch process and switch into its context
 
-SCheduler makes sure that the CPU time is spent running Processes instead of running scheduling algorithms. Its important ot have efficeint design and implementations within the scheduling process and efficient data structures involved in queuing processes in the ready state.
+Scheduler makes sure that the CPU time is spent running Processes instead of running scheduling algorithms. Its important ot have efficeint design and implementations within the scheduling process and efficient data structures involved in queuing processes in the ready state.
     - how long did processes run in the past, misc. data is optional
+
+It is important that the scheduler spends time scheduling processes and doing as little overhead comptuation as possible. This requires the CPU scheduler to have: *Efficient design, effecient scheduling algorithms, and efficient data structures used to represent waiting processes/scheduling decisions (process history, priority, etc).*
 
 ### How long should a Process run?
 
-*How often do we run the scheduler?* The long the schedule runs, the less time can be used to process a Process. 
+*How often do we run the scheduler?* The long the schedule runs, the less time can be used to process a Process.
 
 If we want to understand how well teh CPU time was utilized, we need to calculate the scheduling process time, add the time it takes to determine the next process for scheduling, and then divide it by the amount of time each process ran
 
@@ -302,7 +304,11 @@ If we want to understand how well teh CPU time was utilized, we need to calculat
 ( 2 * Tp) / (2 * Tp + 2 * t_scheduled)
 ```
 
+### Bad Scheduling Efficiency
+
 ![Scheduling Efficiency Bad](./images/5.png)
+
+### Good Scheduling Efficiency
 
 ![Scheduling Efficiency Good](./images/6.png)
 
@@ -314,11 +320,25 @@ If we want to understand how well teh CPU time was utilized, we need to calculat
 
 ![I/O](./images/7.png)
 
+# Quiz 5
+
+Which of the following are not a responsibility of the CPU scheduler?
+
+- maintaining the I/O queue
+- maintaining the ready queue
+- decision on when to context switch
+- decision on when to generate an event that a process is waiting on
+
+### Answer
+
+- maintaining the I/O queue
+- decision on when to generate an event that a process is waiting on
+
 ## Inter Process Communication
 
 ***Can Processes interact?*** Yes.
 
-An OS MUST provide mechanisms for processes to interact with one another. 
+An OS MUST provide mechanisms for processes to interact with one another.
 
 In the modern scheme, more and more applications are structured as MULTIPLE processes that interact with one another
 
@@ -349,11 +369,10 @@ Suppose we have P1: Web Server, and P2: Database. The OS will maintain a "Buffer
 #### Disadvantages
 
 - Overhead
-    - every single piece of information we want ot send between processes must be 
+    - every single piece of information we want ot send between processes must be
         - copied from the user space of one of the processes
         - written into the channel/buffer which is sitting in ther Kernel memory of the OS
         - read back into the address space into the other process
-
 
 ### ICP: Shared Memory
 
@@ -362,11 +381,13 @@ Suppose we have P1: Web Server, and P2: Database. The OS will maintain a "Buffer
 - OS is **out of the way!**
 
 #### Advantanges
+
 - Less overhead
 - OS does not get into the way of the application
 - Faster communication channel between processes
 
 #### Disadvantages
+
 - Introduces additional complexity and possible errors within the application/processes.
 - Since OS is out of the way, there are no strict/rigid/**well defined** APIs and access control mechanisms to read/write data between processes
     - more error prone
@@ -374,7 +395,4 @@ Suppose we have P1: Web Server, and P2: Database. The OS will maintain a "Buffer
 
 ![Shared Memory](./images/9.png)
 
-
 ***It only makes sense to do shared memory based IPC if the setup cost can be amortized across a sufficiently large message set, since establishing the shared memory channel mapping is very expensive***
-
-
