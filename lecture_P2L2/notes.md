@@ -2,7 +2,7 @@
 
 *Single process with many execution contexts*
 
-## Thread Methaphor
+## Thread Metaphor
 
 *A thread is like a worker in a toy shop
 
@@ -15,7 +15,7 @@ Toy Shop
 - Works simultaneously with others
     - Many workers completing toy orders
 - Requires coordination between workers
-    - Sharing of tools, parts, workdstations
+    - Sharing of tools, parts, workstations
 
 Threads
 
@@ -34,7 +34,7 @@ Threads
 
 *A single threaded process is represented by its address space. All of the data encapsulated in the PCB: stack pointer, program counter, code, data, files, reregisters, stack, heap, etc.*
 
-A threads represent multiple independent exeecution contexts. They are apart of the same **virtual address space** so they share:
+A threads represent multiple independent execution contexts. They are apart of the same **virtual address space** so they share:
 - Virtual to physical address mappings
 - Code
 - Data
@@ -63,19 +63,19 @@ Its possible for each thread to execute the same code section with a subset of t
 
 Since each thread has a different execution state it requires its own private copy of the stack, program counter, registers, etc.
 
-### Parrelization
+### Panellization
 
-*By parralelizing the process via breaking up the larger input into subsets carried out by each thread simultaneously, we speed up the time required to process the entire input.*
+*By parallelizing the process via breaking up the larger input into subsets carried out by each thread simultaneously, we speed up the time required to process the entire input.*
 
 Threads can also execute different parts/aspects of the program
     - Create a thread specifically for I/O, Display Rendering, etc.
-    - In the context of a web service application, different threads can handle differe customer requests
+    - In the context of a web service application, different threads can handle different customer requests
         - By specializing threads to specific parts of application logic, we can customize each thread to optimize it's performance for the given task
             - Higher priority of threads that handle more important tasks
 
 *Performance is dependent on how much state can be maintained in the CPU/Processor cache.*
 
-If a given thread is executing a relatively small portion of the code base can lead to a higher percentage of the respective program state in cache --> **Optimizing HOT chache.**
+If a given thread is executing a relatively small portion of the code base can lead to a higher percentage of the respective program state in cache --> **Optimizing HOT cache.**
 
 ### Are threads useful on a single CPU?
 
@@ -114,4 +114,28 @@ Do the following statements apply to processes(P), threads(T) or both(B)?
 - T
 - B
 
-at CS8803-O02_P2L2_Basic Thread Mechanisms
+## Threads and Concurrency
+
+### Thread Support
+
+- Thread Data Structure
+    - Identify threads
+    - keep track of resource usage
+- Mechanisms to **create** and **manage** threads
+- Mechanisms to safely **coordinate** among threads running **concurrently** in the same address space
+
+## Threads and Concurrency
+
+### Processes
+
+*There are issues when executing processes concurrently.* The Operating System ensures that each process has it's own addressing space. The OS and underlying hardware makes sure that there is no access provisioned from 1 address space to the other addressing space of a given process.
+
+### Threads
+
+*Threads provide a shareable address space between them.* This means that each threads has access to the same data and can both read/write to the same memory locations.
+
+**What happens when T1 and T2 try to write data to the same block of memory?** This leads a inconsistencies and creates a **Data Race**. This is common in multi-threaded environment
+
+### Mutual Exclusion
+
+
