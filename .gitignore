@@ -1,2 +1,4 @@
-# Ignore MacOS file
+# Ignore MaacOS file
 .DS_Store
+*/.DS_Store
+**/.DS_Store
