@@ -136,6 +136,90 @@ Do the following statements apply to processes(P), threads(T) or both(B)?
 
 **What happens when T1 and T2 try to write data to the same block of memory?** This leads a inconsistencies and creates a **Data Race**. This is common in multi-threaded environment
 
+## Synchronization Mechanisms
+
 ### Mutual Exclusion
+
+- The operating system provides exclusive access to a memory location for only one thread at a time.
+- Any other threads who want access to the same memory location must wait until the initial thread is finished.
+
+### Mutex
+- The Operating System handles this mutual exclusion of memory via **mutexes** 
+- Mutexes allow a thread to lock a location of memory while it accesses it, ensuring *mutual exclusion remains* then unlocks the area of memory when its operations are complete.
+- Another thread who is waiting for access can then request the mutex...
+
+### Waiting
+
+- Threads can wait on other threads
+- Threads can wait on a *specific condition*
+    - Example: in the event that one is holding a mutex lock on an area of memory it needs to access
+- Condition variables are used to handle inter thread coordination.
+
+## Thread Creation
+
+### Thread Type
+
+*Thread data structure*
+
+Contains:
+- Thread ID
+- (PC) Program Counter
+- (SP) Stack Pointer
+- Registers
+- Stack
+- Attributes
+
+### Fork
+
+*fork(proc, args)*
+
+**Creates a thread, NOT a Unix fork**
+
+*When fork is called, a new thread is created, which means that a new thread data structure has been initialized for the new thread.*
+- Program Counter will point to the first instruction of the program *proc*
+- The *args* passed will be available on the Stack
+
+*The "caller" T0 will execute the following instructions after the ***fork*** call. The thread that is spawned: T1, will execute the first instruction of the passed program i.e. ***proc****
+
+*We also need a mechanisms for T1 to notify that it is done/complete with operation, as well as another mechanism to retrieve the end result of the program if required*
+
+### Join
+
+*join(thread_id)*
+
+**Terminates the thread**
+
+*When the parent thread calls **join** with the child **thread_id**, it will be blocked until the child completes. **join** will return the result of the child's computation.*
+
+### Example
+
+![thread creation](./images/4.png)
+
+### Insert
+```
+create new list element e
+set e.value = X
+read list and list.p_next
+set e.pointer = list.p_next
+set list.p_next = e
+```
+- Problem when 2 threads try to update the pointer field of the first element in the list
+    - Each thread will read the next element as `NULL` then set the next element to a specific value, one will overwrite the other.
+
+## Mutual Exclusion
+
+*In multithreading, we need mutual exclusion to properly support thread coordination*
+
+### Mutex
+
+*Threads must acquire a lock/mutex to access shared resources.*
+
+- When a thread acquires a lock/mutex, it has *exclusive* access to the shared resource.
+- Other threads attempting to access the shared resource will not be successful.
+- Unease foul accesses to shared resources will be **blocked** when trying to access shared resources without the lock/mutex. They will be **suspended** until the lock/mutex has been released.
+- **Data Structure design**:
+    - bool: locked
+    - int: owner
+    - queue: blocked_threads
 
 
