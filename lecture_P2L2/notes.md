@@ -222,4 +222,4 @@ set list.p_next = e
     - int: owner
     - queue: blocked_threads
 
-
+at: Mutual Exclusion
