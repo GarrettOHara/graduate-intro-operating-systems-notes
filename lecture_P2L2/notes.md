@@ -286,9 +286,9 @@ Common problem in OS and multithreaded applications.
 
 2 threads want to perform operations of *reading* and 2 threads that want to access a shared resoruce to *write*
 
-Readers:
+- Readers:
     - 0 or more
-Writers:
+- Writers:
     - 0 or 1
 
 #### Solution
@@ -305,5 +305,18 @@ if(read_counter > 0) READ_OK;
 
 if(writer_count == 1) READ_NOT_OK, WRITE_NOT_OK;
 ```
+
+<ADD NOTES>
+
+## Common mistakes when writing multithreaded applciations
+
+- Keep track of mutex/condition variables used within a resources
+- Check that you are always and correctly using locka and unlock
+- Use a single mutex to access a single resource
+- Check that you are signalling correct condition
+- Check taht you are not using signal when broadcast is required/needed
+- Ask yourself: do you need priority guaruntees?
+
+## Spurious Wake Ups (Unecessary Wake Ups)
 
 
