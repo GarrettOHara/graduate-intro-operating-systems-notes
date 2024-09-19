@@ -143,6 +143,26 @@ Do the following statements apply to processes(P), threads(T) or both(B)?
 - The operating system provides exclusive access to a memory location for only one thread at a time.
 - Any other threads who want access to the same memory location must wait until the initial thread is finished.
 
+Mutex is a data structure and must contain data about its `status` to see if its free or not as well as a list of threads who want access to the list.
+
+A thread that has locked a Mutex has exclusive rights to it.
+
+Other threads tryign to access the mutex will be blocked.
+
+The code within the locked mutex is called the **Critical Section** where only 1 thread at a time can perform these operations. 
+- Updating a counter
+- Writing/updating a file
+- etc.
+
+Owner of mutex frees the lock after leaving the critical section instructions.
+
+**Birrell's Lock API onlyhas unlock function call**
+
+## Thread Creation
+
+Process begins with 1 thread. if T1 calls `fork()` it spawns a new thread. The order in which each thread does each operation is not clear because the CPU is switching between each thread. Its *nondeterministic* if proper handling is not applied.
+
+
 ### Mutex
 - The Operating System handles this mutual exclusion of memory via **mutexes** 
 - Mutexes allow a thread to lock a location of memory while it accesses it, ensuring *mutual exclusion remains* then unlocks the area of memory when its operations are complete.
@@ -222,4 +242,68 @@ set list.p_next = e
     - int: owner
     - queue: blocked_threads
 
-at: Mutual Exclusion
+
+# Quiz 2: Mutexes
+
+Threads T1-T5 are contending for a mutex m. T1 is the first to obtain the mutex. Which thread will get access to m after T1 releases it? Mark all that apply.
+
+<insert diagram from lecture for this to make sense>
+
+- T2
+- T4
+- T3
+- T5
+
+### Answer
+
+T2
+T4
+T5
+
+## Producer Consumer Example
+
+What if the processing needs to perform with mutual exclusion needs to occur only under certain circumstances
+
+Like only execute consumer if ther is data available from producer.
+
+### Condition Variable
+
+`signal()` can notify threads waiting on a certain condition to be met.
+
+- Condition type
+- Wait(mutex, condition)
+    - mutex is automatically released and re-aquired on wait
+- signal(condition)
+    - notify only one thread waiting on condidtion
+- broadcast(condition)
+    - notify all threads watiing on condition
+
+broadcast can wake up all threads, but if the following code requires a mutex, then its kinda useless since the rest will still be waiting.
+
+## Reader / Writer Problem
+
+Common problem in OS and multithreaded applications.
+
+2 threads want to perform operations of *reading* and 2 threads that want to access a shared resoruce to *write*
+
+Readers:
+    - 0 or more
+Writers:
+    - 0 or 1
+
+#### Solution
+
+- Place a mutex on the file.
+    - Too resructive because its not allowing for multiple readers at once
+
+- Create a new data structure to book keep which access is allowed based on the number of readers/writers wanting to perform an opperation.
+
+```C
+if((read_counter == 0) and (write_counter ==0)) READ_OK, WRITE_OK;
+
+if(read_counter > 0) READ_OK;
+
+if(writer_count == 1) READ_NOT_OK, WRITE_NOT_OK;
+```
+
+
